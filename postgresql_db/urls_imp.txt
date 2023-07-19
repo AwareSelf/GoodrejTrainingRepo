@@ -1,0 +1,6 @@
+https://www.prisma.io/dataguide/postgresql/setting-up-a-local-postgresql-database
+https://www.tutorialspoint.com/postgresql/postgresql_create_database.htm
+add path till bin directory to environment variables
+cmd prompt>psql -U postgres
+password - namrata
+postgres=#
