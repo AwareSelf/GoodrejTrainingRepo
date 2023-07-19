@@ -6,7 +6,7 @@ import java.sql.*;
 import javax.sql.*;
 import java.io.*;
 
-public class PreparedStatementEx
+public class JdbcEx
 {
 
 
@@ -39,20 +39,16 @@ public class PreparedStatementEx
 		}
 		
 
-        s="insert into student1 values(?,?,?)";
-         try(PreparedStatement stat1=con.prepareStatement(s);)
+         try(Statement stat1=con.createStatement();)
 		{
- 		     stat1.setInt(1,1);
-    		 stat1.setString(2,"Namrata");
-    		 stat1.setString(3,"Marathe");
-             int no=stat1.executeUpdate();
-    		 System.out.println("no of rows inserted:"+no);
-    		 stat1.setInt(1,2);
-    		 stat1.setString(2,"Rahul");
-    		 stat1.setString(3,"Marathe");
-             no=stat1.executeUpdate();
-    		 System.out.println("no of rows inserted:"+no);
-
+ 		 
+      	 
+      	 s="insert into student1 values(1,'Nitin','Marathe')";	
+         int no=stat1.executeUpdate(s);
+		 System.out.println("no of rows inserted:"+no);
+		 s="insert into student1 values(2,'Abhi','Marathe')";
+		 no=stat1.executeUpdate(s);
+		 System.out.println("no of rows inserted:"+no);
 
 		}
 		catch(SQLException e)

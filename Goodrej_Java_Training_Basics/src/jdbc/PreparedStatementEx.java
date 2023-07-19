@@ -1,48 +1,36 @@
 package jdbc;
+
+
 import java.util.*;
 import java.sql.*;
 import javax.sql.*;
 import java.io.*;
 
-public class  PreparedStatementEx
+public class PreparedStatementEx
 {
 
 
-	public static void main(String[] args) 
+ public static void main(String[] args) 
+ {
+		
+		
+	String s;
+	try
 	{
-		Connection con=null;
-		Statement stat=null;
-		String s;
-		try
-		{
-		// Class.forName("oracle.jdbc.driver.OracleDriver");
+     Class.forName("org.postgresql.Driver");
 		
-	     // con=DriverManager.getConnection("jdbc:oracle:oci8:@oracle9i","scott","tiger");
-
-		//Connection con=DriverManager.getConnection("jdbc:oracle:thin:@saraswati:1521:oracle9i","scott","tiger");
+      try(Connection con=DriverManager.
+		  getConnection("jdbc:postgresql://localhost:5432/testdb","postgres","namrata"); )
+	  {
 		
-		//	Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			Class.forName("org.postgresql.Driver");
-		//	con=DriverManager.getConnection("jdbc:derby:namadbxx;create=true;user=nama;password=nama");	
-			con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/testdb","postgres","namrata");
-		
+	    System.out.println("The connection is successful.");
 	
-		System.out.println("The connection is successful.");
-		}
-		catch(Exception e)
-		{
-			 e.printStackTrace();
-	         System.err.println(e.getClass().getName()+": "+e.getMessage());
-	         System.exit(0);
-		}
-		
 
 
-        try
+        try(Statement stat=con.createStatement();)
 		{
-		 stat=con.createStatement();
-	//	 s="create table student1(Rollno int,Name varchar(50),serName varchar(50))";
-		 s="create table student1(Rollno int,Name text,serName text)";
+		 
+		 s="create table student1(Rollno int,Name varchar(50),serName varchar(50))";
          stat.executeUpdate(s);
 		}
 		catch(SQLException e)
@@ -51,20 +39,19 @@ public class  PreparedStatementEx
 		}
 		
 
-         try
+        s="insert into student1 values(?,?,?)";
+         try(PreparedStatement stat1=con.prepareStatement(s);)
 		{
- 		 s="insert into student1 values(?,?,?)";	
-		 PreparedStatement stat1=con.prepareStatement(s);
-         stat1.setInt(1,1);
-		 stat1.setString(2,"Namrata");
-		 stat1.setString(3,"Marathe");
-         int no=stat1.executeUpdate();
-		 System.out.println("no of rows inserted:"+no);
-		 stat1.setInt(1,2);
-		 stat1.setString(2,"Rahul");
-		 stat1.setString(3,"Marathe");
-         no=stat1.executeUpdate();
-		 System.out.println("no of rows inserted:"+no);
+ 		     stat1.setInt(1,1);
+    		 stat1.setString(2,"Namrata");
+    		 stat1.setString(3,"Marathe");
+             int no=stat1.executeUpdate();
+    		 System.out.println("no of rows inserted:"+no);
+    		 stat1.setInt(1,2);
+    		 stat1.setString(2,"Rahul");
+    		 stat1.setString(3,"Marathe");
+             no=stat1.executeUpdate();
+    		 System.out.println("no of rows inserted:"+no);
 
 
 		}
@@ -75,23 +62,14 @@ public class  PreparedStatementEx
 		
 
 
-        try
-		{
-		  stat.close();
-		}
-		catch(SQLException e)
-		{
-		  e.printStackTrace();
-		}
-
-		System.out.println("create is successful:");
+      	System.out.println("create is successful:");
 
 
 
-		try
+		try(Statement stat=con.createStatement();)
 		{
 			
-		 stat=con.createStatement();
+		
          s= "update student1 set name='nikhil' where rollno=1";
 		 
           int count = stat.executeUpdate(s);
@@ -107,29 +85,32 @@ public class  PreparedStatementEx
 
 
 
-        try
+        try(Statement stat=con.createStatement();)
 		{
-		 stat=con.createStatement();
+		 
          s= "select * from student1";
-		ResultSet rset=stat.executeQuery(s);
+         ResultSet rset=stat.executeQuery(s);
 		
-		while(rset.next())
-			System.out.println(rset.getInt(1)+" "+rset.getString(2)+"    "+rset.getString(3));
-		}
-		catch(SQLException e)
-		{   
+         while(rset.next())
+        	 System.out.println(rset.getInt(1)+" "+rset.getString(2)+"    "+rset.getString(3));
+			}
+		 catch(SQLException e)
+		 {   
 			e.printStackTrace();
-		}
+		 }
 		
-        try
-		{
-		  stat.close();
-		}
-		catch(SQLException se)
-		{
-			se.printStackTrace();
-		}
-
+	  }//end of try block to get connection
+      catch(SQLException e)
+      {
+    	  System.out.println("Coonection not created.."+e);
+    	  e.printStackTrace();
+      }
+      
+	 } //end of try to load driver class
+     catch(ClassNotFoundException e)
+     {
+    	  System.out.println("SQL Driver class not found.");
+     }
 
 	}
 }
