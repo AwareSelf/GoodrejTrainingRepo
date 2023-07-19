@@ -38,20 +38,40 @@ public class PreparedStatementEx
 			e.printStackTrace();
 		}
 		
-
-        s="insert into student1 values(?,?,?)";
+      
+        
+        String name=null;
+        String surname=null;
+        int rollno=-1;
+        String yesno = "no";  
+        Scanner sc = new Scanner(System.in);
+      
+    	      
+         s="insert into student1 values(?,?,?)";
          try(PreparedStatement stat1=con.prepareStatement(s);)
 		{
- 		     stat1.setInt(1,1);
-    		 stat1.setString(2,"Namrata");
-    		 stat1.setString(3,"Marathe");
-             int no=stat1.executeUpdate();
-    		 System.out.println("no of rows inserted:"+no);
-    		 stat1.setInt(1,2);
-    		 stat1.setString(2,"Rahul");
-    		 stat1.setString(3,"Marathe");
-             no=stat1.executeUpdate();
-    		 System.out.println("no of rows inserted:"+no);
+        	 
+        	  do
+              {
+              
+                 System.out.println("enter the rollno:");
+        		   rollno = sc.nextInt();
+        		   System.out.println("enter the name:");
+        		   name = sc.next();
+        		   System.out.println("enter the surname:");
+        		   surname = sc.next();
+        		
+        		   stat1.setInt(1,rollno);
+        		   stat1.setString(2,name);
+        		   stat1.setString(3,surname);
+        		   int  no=stat1.executeUpdate();
+        		   System.out.println("no of rows inserted:"+no);
+    		 
+    		  System.out.println("do you wish to insert more:(yes/no):");
+    		  
+    		  yesno = sc.next();
+    		  
+    		}while(yesno.equals("yes"));
 
 
 		}
@@ -59,9 +79,9 @@ public class PreparedStatementEx
 		{   
 			e.printStackTrace();
 		}
+                 
+         
 		
-
-
       	System.out.println("create is successful:");
 
 
