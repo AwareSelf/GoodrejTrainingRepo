@@ -61,7 +61,10 @@ public class ListEx {
 		meth(l1);
 		
 		System.out.println("displaying the list of emps using forEach method..");
-		l1.forEach(el->System.out.println(el)); //lambda func as callback java 1.8
+		l1.forEach(el->System.out.println(el)
+				
+				
+				); //lambda func as callback java 1.8
 		
 		double totSal =0;
 		Iterator<Emp> it = l1.iterator();
