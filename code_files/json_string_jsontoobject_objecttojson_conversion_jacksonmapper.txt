@@ -1,0 +1,22 @@
+JacksonMapperAutoConfiguration - in spring boot
+  JavaObject ---to and fro--- JSON String
+
+
+empob
+empid=1
+empname=namrata
+empsalary=5000
+return empob
+
+string in json format
+json empob
+"
+{
+
+empid:1
+empname:namrata
+empsalary:5000
+} "
+
+on borwser side - Javascript/Javascript framework can convert JSON String into Javascript object
+so it can be converted to empob javascript object

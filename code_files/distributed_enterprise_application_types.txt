@@ -1,0 +1,13 @@
+
+3-tier app - (UI /Web Tier,business tier,data tier)
+distributed Enterprise Application - type 1
+
+webclient                             server-side enterprise app
+browser,postman (http protocol)  -->  Enterprise web app(web layer->business layer-->service layer) --> database server/some anthoer app
+
+
+distributed enterprise application -- type 2
+
+
+client                                         server side
+browser --> angular(UI layer)  ---------------> bussiness layer impl as rest services, dao service --> database/another app
