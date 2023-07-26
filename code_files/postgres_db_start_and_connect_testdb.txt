@@ -1,0 +1,36 @@
+Microsoft Windows [Version 10.0.19044.2251]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\namra>psql -U postgres
+Password for user postgres:
+psql (14.8)
+WARNING: Console code page (437) differs from Windows code page (1252)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                 List of databases
+   Name    |  Owner   | Encoding |          Collate           |           Ctype            |   Access privileges
+-----------+----------+----------+----------------------------+----------------------------+-----------------------
+ postgres  | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+ template0 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | English_United States.1252 | English_United States.1252 | =c/postgres          +
+           |          |          |                            |                            | postgres=CTc/postgres
+ testdb    | postgres | UTF8     | English_United States.1252 | English_United States.1252 |
+(4 rows)
+
+
+postgres=# \c testdb
+You are now connected to database "testdb" as user "postgres".
+testdb=# select * from books;
+ id |              name              | price
+----+--------------------------------+-------
+  1 | Thinking in Java               | 46.32
+  4 | Head First Android Development | 41.19
+  2 | Mkyong in Java                 | 99.99
+(3 rows)
+
+
+testdb=#
