@@ -1,0 +1,3 @@
+Database Architecture - Database Design - Data Normalization Forms - Data Handling
+Mechanisms - Redundancy, Integrity, Isolation and Atomicity - SQL CRUD queries –
+Transaction Processing - Joins and Sub-queries -
