@@ -1,0 +1,56 @@
+design patterns:-https://stackoverflow.com/questions/1673841/examples-of-gof-design-patterns-in-javas-core-libraries?rq=1
+
+Introduction
+With the increase in the number of the cores available in the processors nowadays, 
+coupled with the ever increasing need to achieve more throughput, 
+multi-threading APIs are getting quite popular. 
+Java provides its own multi-threading framework called the Executor Framework.
+
+What is the Executor Framework?
+The Executor Framework contains a bunch of components that are used to efficiently manage 
+worker threads. The Executor API de-couples the execution of task from the actual task to be 
+executed via Executors. 
+This design is one of the implementations of the Producer-Consumer pattern.
+
+What is Executor design Pattern?
+What is Executor design pattern in Java?
+Executor Design pattern can be defined as a particular type of design pattern that serves the 
+purpose of decoupling the execution of a task from the real task taken by the user with the help 
+of executors. ... 
+It decouples the submission of a command from the execution of that very command.
+
+What are Executors?What they provide?
+The java.util.concurrent.Executors provide factory methods which are be used to create ThreadPools 
+of worker threads.
+
+To use the Executor Framework we need to create one such thread pool and submit the task to it 
+for execution. It is the job of the Executor Framework to schedule and execute the submitted tasks 
+and return the results from the thread pool.
+
+A basic question that comes to mind is :-
+Why do we need such thread pools when we can create objects 
+of java.lang.Thread or implement Runnable/Callable interfaces to achieve parallelism?
+https://howtodoinjava.com/java-concurrency-tutorial/
+1)
+Creating a new thread for a new task leads to overhead of thread creation and tear-down. 
+Managing this thread life-cycle significantly adds to the execution time.
+2)
+Adding a new thread for each process without any throttling leads to the creation of a large number 
+of threads. These threads occupy memory and cause wastage of resources. 
+The CPU starts to spend too much time switching contexts when each thread is swapped out and 
+another thread comes in for execution.
+All these factors reduce the throughput of the system. Thread pools overcome this issue by keeping 
+the threads alive and reusing the threads. Any excess tasks flowing in than the threads in the pool 
+can handle are held in a Queue. Once any of threads get free, they pick up the next task from this 
+queue. This task queue is essentially unbounded for the out-of-box executors provided by the JDK.
+
+ExecutorService is based on Mediator design pattern - check what problems mediator design
+pattern alleviates to understand why to use ExecutorService instead of Runnable interface
+
+Java ExecutorService
+The Java ExecutorService is the interface which allows us to execute tasks on threads 
+asynchronously. 
+The Java ExecutorService interface is present in the java.util.concurrent package. 
+The ExecutorService helps in maintaining a pool of threads and assigns them tasks. 
+It also provides the facility to queue up tasks until there is a free thread available if 
+the number of tasks is more than the threads available.

@@ -1,0 +1,52 @@
+Types of Executors
+Now that we have a good idea of what an executor is, let's also take a look at the different kinds
+of executors.
+
+SingleThreadExecutor
+This thread pool executor has only a single thread. 
+It is used to execute tasks in a sequential manner. 
+If the thread dies due to an exception while executing a task, a new thread is created to replace 
+the old thread and the subsequent tasks are executed in the new one.
+
+ExecutorService executorService = Executors.newSingleThreadExecutor()
+
+FixedThreadPool(n)
+As the name indicates, it is a thread pool of a fixed number of threads. 
+The tasks submitted to the executor are executed by the n threads and if there is more task they are 
+stored on a LinkedBlockingQueue. This number is usually the total number of the threads supported by 
+the underlying processor.
+
+ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+CachedThreadPool
+This thread pool is mostly used where there are lots of short-lived parallel tasks to be executed. 
+Unlike the fixed thread pool, the number of threads of this executor pool is not bounded. 
+If all the threads are busy executing some tasks and a new task comes, the pool will create and 
+add a new thread to the executor. 
+As soon as one of the threads becomes free, it will take up the execution of the new tasks. 
+If a thread remains idle for sixty seconds, they are terminated and removed from cache.
+
+However, if not managed correctly, or the tasks are not short-lived, the thread pool will have lots 
+of live threads. This may lead to resource thrashing and hence performance drop.
+
+ExecutorService executorService = Executors.newCachedThreadPool();
+
+ScheduledExecutor
+This executor is used when we have a task that needs to be run at regular intervals or if we wish 
+to delay a certain task.
+
+ScheduledExecutorService scheduledExecService = Executors.newScheduledThreadPool(1);
+
+The tasks can be scheduled in ScheduledExecutor using either of the two methods scheduleAtFixedRate 
+or scheduleWithFixedDelay.
+
+scheduledExecService.scheduleAtFixedRate(Runnable command, long initialDelay, long period, 
+TimeUnit unit)
+scheduledExecService.scheduleWithFixedDelay(Runnable command, long initialDelay, long period, 
+TimeUnit unit)
+The main difference between the two methods is their interpretation of the delay between consecutive 
+executions of a scheduled job.
+
+scheduleAtFixedRate executes the task with fixed interval, irrespective of when the previous task 
+ended.
+scheduleWithFixedDelay will start the delay countdown only after the currently task completes.

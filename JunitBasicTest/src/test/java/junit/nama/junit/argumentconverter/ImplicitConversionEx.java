@@ -1,0 +1,61 @@
+package junit.nama.junit.argumentconverter;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.time.Month;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.converter.ConvertWith;
+import org.junit.jupiter.params.provider.CsvSource;
+
+class ImplicitConversionEx {
+
+	@ParameterizedTest
+	@CsvSource({"APRIL", "JUNE", "SEPTEMBER", "NOVEMBER"}) // Pssing strings
+	void someMonths_Are30DaysLongCsv(Month month) {
+	    final boolean isALeapYear = false;
+	    assertEquals(30, month.length(isALeapYear));
+	}
+	
+	/*
+	This seems like it shouldn't work, but it somehow does.
+
+	JUnit 5 converts the String arguments to the specified enum type. To support use cases like this, 
+	JUnit Jupiter provides a number of built-in implicit type converters.
+
+	The conversion process depends on the declared type of each method parameter. 
+	The implicit conversion can convert the String instances to types such as the following:
+
+	UUID 
+	Locale
+	LocalDate, LocalTime, LocalDateTime, Year, Month, etc.
+	File and Path
+	URL and URI
+	Enum subclasses
+    */
+	
+	
+	//bcz date-string is provided in standard iso format it can autoconvert it to LocalDate object
+	@ParameterizedTest
+	@CsvSource({"2022-11-09,2022", "2019-11-09,2019"})  
+	void getYear_ShouldWorkAsExpected(LocalDate date, int expected) {
+	    assertEquals(expected, date.getYear());
+	}
+	
+	
+	
+	
+	/*
+	 * implicit conversion not possible as datestring is not in standard iso format.use explicit argument converter
+	 * for this to work.
+	@ParameterizedTest
+	@CsvSource({"2018/12/25,2018", "2019/02/11,2019"})
+	void getYear_ShouldWorkAsExpected1(LocalDate date, int expected) {
+	    assertEquals(expected, date.getYear());
+	}
+	
+	*/
+
+}

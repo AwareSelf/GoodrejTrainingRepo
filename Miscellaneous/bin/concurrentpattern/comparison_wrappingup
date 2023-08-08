@@ -1,0 +1,38 @@
+Comparison between Executor pattern and Runnable pattern
+// Executor pattern
+executor.execute(task);
+
+// Runnable pattern
+new Thread(task).start();
+
+Let’s compare the two patterns:
+
+The Executor pattern does not create a new thread.
+The behavior is the same: both calls return immediately, the task is executed in another thread.
+
+Wrapping up
+Building an Executor is more efficient than creating threads on demand. 
+Creating an Executor or ExecutorService will create a pool of thread when this Executor is 
+created and those threads will remain alive as long as the executor is alive. 
+So, one given thread can execute as many tasks as we need.
+
+We can pass instances of Runnable to an Executor. 
+The Executor has a waiting queue to handle the fact that it can have more requests than available 
+threads. If we want, we can ask the Executor to remove a task from the waiting queue. 
+So using Executor pattern is more efficient than using the basic Runnable pattern.
+
+Understanding about some ways to create ExecutorService.
+
+Fork-Join and ExecutorService.
+
+Refer:
+
+https://stackoverflow.com/questions/2104676/java-executor-best-practices-for-tasks-that-should-run-forever
+
+https://myshadesofgray.wordpress.com/2014/04/13/java-executor-framework/
+
+https://javarevisited.blogspot.com/2013/07/how-to-create-thread-pools-in-java-executors-framework-example-tutorial.html
+
+http://jcip.net/
+
+https://www.developer.com/java/data/using-the-executor-framework-to-deal-with-java-threads.html

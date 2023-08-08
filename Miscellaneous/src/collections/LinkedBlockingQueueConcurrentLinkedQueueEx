@@ -1,0 +1,117 @@
+Both LinkedBlockingQueue and the ConcurrentLinkedQueue are queue implementations 
+and share some common characteristics. 
+Let's discuss the similarities of these two queues:
+
+Both implements the Queue Interface
+They both use linked nodes to store their elements
+Both are suitable for concurrent access scenarios
+
+Although both of these queues have certain similarities, there are substantial characteristics 
+differences, too:
+
+Feature	LinkedBlockingQueue	ConcurrentLinkedQueue
+Blocking Nature:
+It is a blocking queue and implements the BlockingQueue interface	
+It is a non-blocking queue and does not implement the BlockingQueue interface
+
+Queue Size:
+It is an optionally bounded queue, which means there are provisions to define the queue size 
+during creation	
+It is an unbounded queue, and there is no provision to specify the queue size during creation
+
+Locking Nature:	
+It is a lock-based queue	
+It is a lock-free queue
+
+Algorithm:	
+It implements its locking based on two-lock queue algorithm	
+It relies on the Michael & Scott algorithm for non-blocking, lock-free queues 
+
+Implementation	
+In the two-lock queue algorithm mechanism, LinkedBlockingQueue uses two different locks – 
+the putLock and the takeLock. The put/take operations uses the first lock type, and the take/poll 
+operations use the other lock type	
+It uses CAS (Compare-And-Swap) for its operations
+
+Blocking Behavior	
+It is a blocking queue. So, it blocks the accessing threads when the queue is empty	
+It does not block the accessing thread when the queue is empty and returns null
+
+Blocking Queue:
+BlockingQueue<Integer> unboundedQueue = new LinkedBlockingQueue<>();
+An unbounded queue implies that the size of the queue is not specified while creating. 
+Therefore, the queue can grow dynamically as elements are added to it. 
+However, if there is no memory left, then the queue throws a java.lang.OutOfMemoryError.
+
+We can create a LinkedBlockingQueue from an existing collection as well:
+Collection<Integer> listOfNumbers = Arrays.asList(1,2,3,4,5);
+BlockingQueue<Integer> queue = new LinkedBlockingQueue<>(listOfNumbers);
+
+The LinkedBlockingQueue class implements the BlockingQueue interface, 
+which provides the blocking nature to it.
+A blocking queue indicates that the queue blocks the accessing thread if it is full 
+(when the queue is bounded) or becomes empty. If the queue is full, then adding a new element will 
+block the accessing thread unless there is space available for the new element. 
+Similarly, if the queue is empty, then accessing an element blocks the calling thread:
+
+ExecutorService executorService = Executors.newFixedThreadPool(1);
+LinkedBlockingQueue<Integer> queue = new LinkedBlockingQueue<>();
+executorService.submit(() -> {
+  try {
+    queue.take();
+  } 
+  catch (InterruptedException e) {
+    // exception handling
+  }
+});
+In the above code snippet, we are accessing an empty queue. 
+Therefore, the take method blocks the calling thread.
+The blocking feature of the LinkedBlockingQueue is associated with some cost. 
+This cost is because every put or the take operation is lock contended between the producer or 
+the consumer threads. Therefore, in scenarios with many producers and consumers, put and take 
+actions could be slower.
+
+
+ConcurrentLinkedQueue:
+A ConcurrentLinkedQueue is an unbounded, thread-safe, and non-blocking queue.
+
+Let's create an empty ConcurrentLinkedQueue:
+
+ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue();
+
+We can create a ConcurrentLinkedQueue from an existing collection as well:
+Collection<Integer> listOfNumbers = Arrays.asList(1,2,3,4,5);
+ConcurrentLinkedQueue<Integer> queue = new ConcurrentLinkedQueue<>(listOfNumbers);
+
+Unlike a LinkedBlockingQueue, a ConcurrentLinkedQueue is a non-blocking queue. 
+Thus, it does not block a thread once the queue is empty. 
+Instead, it returns null. 
+Since its unbounded, it'll throw a java.lang.OutOfMemoryError if there's no extra memory to 
+add new elements.
+
+Apart from being non-blocking, a ConcurrentLinkedQueue has additional functionality.
+
+In any producer-consumer scenario, consumers will not contend with producers; 
+however, multiple producers will contend with one another:
+
+int element = 1;
+ExecutorService executorService = Executors.newFixedThreadPool(2);
+ConcurrentLinkedQueue<Integer> queue = new ConcurrentLinkedQueue<>();
+
+Runnable offerTask = () -> queue.offer(element);
+
+Callable<Integer> pollTask = () -> {
+  while (queue.peek() != null) {
+    return queue.poll().intValue();
+  }
+  return null;
+};
+
+executorService.submit(offerTask);
+Future<Integer> returnedElement = executorService.submit(pollTask);
+assertThat(returnedElement.get().intValue(), is(equalTo(element)));
+
+The first task, offerTask, adds an element to the queue, and the second task, pollTask, 
+retrieve an element from the queue. 
+The poll task additionally checks the queue for an element first as ConcurrentLinkedQueue 
+is non-blocking and can return a null value.

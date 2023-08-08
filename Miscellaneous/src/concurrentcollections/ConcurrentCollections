@@ -1,0 +1,72 @@
+ConcurrentMap is an interface and it is a member of the Java Collections Framework, 
+which is introduced in JDK 1.5 represents a Map that is capable of handling concurrent 
+access to it without affecting the consistency of entries in a map. 
+ConcurrentMap interface present in java.util.concurrent package. 
+It provides some extra methods apart from what it inherits from the SuperInterface i.e. java.util.Map. It has inherited the Nested Interface Map.Entry<K, V>. 
+
+HashMap operations are not synchronized, while Hashtable provides synchronization. 
+Though Hashtable is a thread-safe, it is not very efficient. To solve this issue, 
+the Java Collections Framework introduced ConcurrentMap in Java 1.5.
+		
+Java Program to illustrate methods
+of ConcurrentMap interface
+
+Since ConcurrentMap is an interface,
+we create instance using ConcurrentHashMap
+
+public interface ConcurrentMap<K,V> extends Map<K,V>
+Here, K is the type of key Object and V is the type of value Object.
+
+It extends the Map interface in Java.
+ConcurrentNavigableMap<K,V> is the SubInterface.
+ConcurrentMap is implemented by ConcurrentHashMap, ConcurrentSkipListMap classes.
+ConcurrentMap is known as a synchronized Map.
+Implementing Classes
+Since it belongs to java.util.concurrent package, we must import is using
+
+import java.util.concurrent.ConcurrentMap
+                or
+import java.util.concurrent.*
+The ConcurrentMap has two implementing classes which are ConcurrentSkipListMap and ConcurrentHashMap. The ConcurrentSkipListMap is a scalable implementation of the ConcurrentNavigableMap interface which extends ConcurrentMap interface. The keys in ConcurrentSkipListMap are sorted by natural order or by using a Comparator at the time of construction of the object. The ConcurrentSkipListMap has the expected time cost of log(n) for insertion, deletion, and searching operations. It is a thread-safe class, therefore, all basic operations can be accomplished concurrently.
+
+Syntax:
+
+// ConcurrentMap implementation by ConcurrentHashMap
+CocurrentMap<K, V> numbers = new ConcurrentHashMap<K, V>();
+
+// ConcurrentMap implementation by ConcurrentSkipListMap
+ConcurrentMap< ? , ? > objectName = new ConcurrentSkipListMap< ? , ? >();
+
+
+ConcurrentHashMap
+
+Retrievals reflect the results of the most recently completed update operations holding upon their 
+onset. For aggregate operations such as putAll and clear, concurrent retrievals may reflect 
+insertion or removal of only some entries.
+
+
+ConcurrentSkipListMap is sorted and provides
+expected average log(n) time cost for the containsKey, get, put and remove operations and their 
+variants
+ConcurrentSkipListMap isn't so fast, but is useful when you need sorted thread-safe map.
+--------------------------------------------------------------------------------------------------
+CopyOnWriteArrayList:-
+Class declaration
+public class CopyOnWriteArrayList
+   extends Object
+implements List, RandomAccess, Cloneable, Serializable
+CopyOnWriteArrayList is a thread-safe variant of ArrayList where operations which can change the 
+ArrayList (add, update, set methods) creates a clone of the underlying array.
+
+CopyOnWriteArrayList is to be used in a Thread based environment where read operations are very 
+frequent and update operations are rare.
+
+Iterator of CopyOnWriteArrayList will never throw ConcurrentModificationException.
+
+Any type of modification to CopyOnWriteArrayList will not reflect during iteration since the
+ iterator was created.
+
+List modification methods like remove, set and add are not supported in the iteration. 
+This method will throw UnsupportedOperationException.
+
+null can be added to the list.

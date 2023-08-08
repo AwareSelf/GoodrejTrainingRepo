@@ -1,0 +1,18 @@
+https://www.baeldung.com/junit-5
+https://developer.ibm.com/tutorials/j-introducing-junit5-part1-jupiter-api/
+https://www.softwaretestinghelp.com/junit-5-nested-class/
+https://howtoprogram.xyz/2016/10/28/junit-5-parameter-resolution-example/
+
+
+parameterized tests
+https://mkyong.com/junit5/junit-5-parameterized-tests/
+https://www.baeldung.com/parameterized-tests-junit-5
+
+mockito
+https://javapointers.com/java/unit-test/difference-between-spy-and-mock-in-mockito/
+
+Suite example
+https://kkjavatutorials.com/junit-5-test-suites-examples/#:~:text=Point%20to%20be%20noted%20here,selected%20for%20the%20test%20suite.&text=We%20can%20use%20%40SelectClasses%20annotation,class).
+
+assertj library example
+https://mkyong.com/junit5/junit-5-assertj-examples/

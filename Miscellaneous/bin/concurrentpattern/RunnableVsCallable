@@ -1,0 +1,105 @@
+Runnable vs Callable
+
+Similarity:-
+Before looking at the difference between the Runnable and Callable interface, 
+let's look at the similarities between them, they are indeed quite similar.
+
+1) The most common thing between them is that both are used to encapsulate code which needs to 
+be run in parallel on a separate thread.
+
+2) The second similarity between them is that both can be used with the Executors framework 
+introduced in Java 5. Executors framework defines ExecutorService interface which can accept 
+and execute Runnable and Callable.
+
+3) You can also convert Runnable to Callable by using the following utility method provided 
+by Executors class
+
+Callable callable = Executors.callable(Runnable task);
+
+As I said, both are used to encapsulate the code, you want to run in a separate thread, 
+but there is a limitation, you cannot execute a Callable instance in a thread, 
+just like you execute a Runnable instance, you need an ExecutorService instance. 
+Let's see them in detail.
+
+
+4) The fourth similarity between the Runnable and Callable interface is that both are SAM type 
+i.e. they have a single abstract method, which means they can be used in lambda expression in 
+Java 8 as shown below.
+
+new Thread( () -> System.out.println("Runnable") ).start()
+Read more: https://javarevisited.blogspot.com/2016/08/useful-difference-between-callable-and-Runnable-in-Java.html#ixzz7HqIt4tkW
+
+Difference:-
+Difference between Runnable vs Callable interface
+Here are some important differences between these two key interfaces of Java's multithreading API 
+in the point format.
+
+1) Existence and Availability
+The first and most important difference between Runnable and Callable interface is that Runnable 
+is available in Java right from the beginning i.e. JDK 1.0 while Callable was later added to Java 5,
+so you cannot use Callable before Java 5.
+
+
+2) Result
+The second key difference between Callable and Runnable is that Callable can return the result of 
+the parallel processing of a task. It returns a Future object, which represents the lifecycle of 
+a task and provides methods to check if the task has been completed or canceled, retrieve the 
+result or cancel the task. 
+Since the return type of Runnable's run() method is void, it cannot return anything.
+
+
+3) Checked Exception
+Another worth noting difference between these two interfaces is that Callable's call() method can 
+throw Checked exception while Runnable's run() method cannot throw checked exception.
+
+
+4) The call() vs run() methods
+In order to use Callable, you need to override the call() method while in order to use the Runnable 
+interface you need to override the run() method in Java.
+
+
+5) Execution
+There is one limitation while using the Callable interface in Java that you cannot pass it to 
+Thread as you pass the Runnable instance. There is no constructor defined in the Thread class which 
+accepts a Callable interface. So in order to execute a Callable instance, you need to use the 
+ExecutorService interface of the Java 5 Executor framework. 
+
+This interface defines the submit() method which accepts a Callable instance and returns a Future 
+object which holds the result of computation as shown below:
+
+Future holder = exec.submit(aCallable);
+result = holder.get();
+
+Remember, Future.get() is a blocking method and blocks until execution is finished, so you should 
+always call this method with a timeout to avoid deadlock or livelock in your application.
+
+Read more: https://javarevisited.blogspot.com/2016/08/useful-difference-between-callable-and-Runnable-in-Java.html#ixzz7HqJw8oEg
+
+Difference between the submit() and execute() method in Java Concurrency:-
+Apart from the fact that the submit() method can return output and execute() cannot, 
+the following are other notable differences between these two key methods of the Executor 
+framework of Java 5.
+
+1) The submit() can accept both Runnable and Callable tasks but execute() can only accept the 
+Runnable task.
+
+2) The submit() method is declared in the ExecutorService interface while the execute() method is 
+declared in the Executor interface.(Since ExecutorService interface extends from Executor inetrface 
+you can call execute() from ExecutorService also)
+
+3) The return type of submit() method is a Future object but the return type of execute() method is 
+void.
+
+Read more: https://javarevisited.blogspot.com/2016/04/difference-between-ExecutorServie-submit-vs-Executor-execute-method-in-Java.html#ixzz7HqLly5fX
+
+Similarities between submit() and execute() method:-
+1) Both submit() and execute() methods are used to submit a task to the Executor framework for 
+asynchronous execution.
+
+2) Both submit() and execute() can accept a Runnable task.
+
+3) You can access submit() and execute() from the ExecutorService interface because it also 
+extends the Executor interface which declares the execute() method.
+
+Read more: https://javarevisited.blogspot.com/2016/04/difference-between-ExecutorServie-submit-vs-Executor-execute-method-in-Java.html#ixzz7HqM9yew2
+https://javarevisited.blogspot.com/2016/08/useful-difference-between-callable-and-Runnable-in-Java.html#axzz7HqI4bqeD

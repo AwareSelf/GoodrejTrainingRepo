@@ -1,0 +1,53 @@
+
+Java Concurrency: Executing Value-Returning Tasks with Callable and Future:-
+This Java Concurrency tutorial guides you how to execute a task that computes a value and wait 
+for the result available. This can be done by submitting a Callable task to an ExecutorService 
+and getting the result via a Future object.
+
+The ExecutorServiceinterface defines a method that allows us to execute such kind of value-returning 
+tasks:
+     <T> Future<T>   submit(Callable<T> task)
+Here, the type parameter T is the return type of the task. 
+You submit a task that implements the Callable interface which defines only one method as follows:
+
+public interface Callable<T> {
+    public T call();   
+}
+The purpose of the Callable interface is similar to Runnable, but its method returns a value of type 
+T.
+Once the task is submitted, the executor immediately returns an object of type Future representing 
+the pending results of the task, for example:
+
+Callable<Integer> task = new task that returns an Integer value;
+Future<Integer> result = executor.submit(task);
+
+Then you can invoke the Future’s get() method to obtain the result upon successful completion. 
+There are two overloads of this method defined as follows:
+
+public interface Future<T> {
+    T get();
+    T get(long timeout, TimeUnit unit);
+}
+The first overload version waits if necessary for the computation to complete and then 
+retrieves its result:
+
+Integer value = result.get();
+This method blocks the current thread to wait until the computation completes and returns the value.
+
+In case you want to wait only for a specified amount of time, use the second overload version:
+
+Integer value = result.get(2, TimeUnit.SECONDS);
+
+This call waits if necessary for at most 2 seconds for the computation to complete, 
+and then retrieves the result if available. 
+If the task takes longer time to complete, the call returns null. 
+It throws TimeoutException if the wait timed out.
+
+And both methods throw ExecutionException if the task threw an exception, and throw 
+InterruptedException if the current thread was interrupted while waiting. 
+ 
+Now, let’s see a complete example.
+Suppose that we have two tasks: the first calculates the factorial value of N numbers, 
+and the second computes the sum of N numbers.
+
+https://www.codejava.net/java-core/concurrency/java-concurrency-executing-value-returning-tasks-with-callable-and-future

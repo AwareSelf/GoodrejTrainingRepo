@@ -1,0 +1,60 @@
+Details about TreeMap, HashMap and LinkedHashMap that help to differentiate them are given as 
+follows −
+
+TreeMap in Java
+A TreeMap in Java is implemented using a Red-Black trees. 
+It has key-value pairs i.e. keys that are associated with the values and the keys are ordered. 
+A TreeMap can only have unique elements and cannot have a null key but have null elements.
+
+
+HashMap in Java
+A HashMap in Java is implemented using an array of linked lists. 
+It has key-value pairs i.e. keys that are associated with the values and the keys 
+are in arbitrary order. 
+A HashMap can only have unique elements and can have only one null key but multiple null 
+elements.
+
+
+
+LinkedHashMap in Java
+A LinkedHashMap in Java is implemented using doubly linked buckets. 
+It has key-value pairs i.e. keys that are associated with the values and the keys are ordered by 
+their insertion order. 
+A LinkedHashMap can only have unique elements and can have only one null key but multiple null 
+elements.
+
+
+Sr. No.	Key	HashMap	HashTable
+1	Introduction	
+Hashmap is the advanced version of HashTable and is introduced as a new class in JDK 1.2.	
+HashTable on the other hand is the legacy class and was introduced prior to HashMap.
+
+2	Internal implementation	
+Internal implementation of both classes is same upto some extent but in case of HashMap one null 
+key and multiple null values are allowed.	
+
+HashTable internally implemented in such manner that it does not allow any null key or any 
+null value.
+
+3	Synchronization	
+Synchronization is not implemented in HashMap and is not thread safe so can't be shared between 
+many threads without proper synchronization code.	
+
+On the other hand, HashTable is synchronized and is thread safe so can be shared with many threads.
+
+4	Traversed 
+the elements	HashMap provides Iterator for its iteration in order to traverse the values 
+stored in it.	
+On the other hand along with Iterator HashTable also provides Enumerator to traverse the values 
+stored in it.
+
+5	Index performance	
+Due to the absence of synchronization HashMap is faster as compare to HashTable and is preferred 
+when synchronization is not needed.	
+
+Synchronization in HashTable makes it slower as compare to HashMap but also eliminate the 
+writing of extra code to obtain the synchronization.
+
+6	Inheritance	
+HashMap inherits AbstractMap class.	
+On the other hand, HashTable inherits Dictionary class.

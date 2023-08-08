@@ -1,0 +1,41 @@
+”It is imposed as a mandate by Java that if an inner class defined within a method 
+references a local variable of that method, that local variable should be defined as final.”
+
+This is because the function may complete execution and get removed from the process stack,
+with all the variables destroyed but it may be the case that objects of the inner class are
+still on the heap referencing a particular local variable of that function. 
+To counter this, Java makes a copy of the local variable and gives that as a reference to 
+the inner class. 
+To maintain consistency between the 2 copies, the local variable is mandated to be “final” 
+and non-modifiable.
+This is also called as closure in Javascript
+An example where this could happen is as follows:
+
+public interface TestInterface {
+    public void internalTestFunction();
+}
+
+public class VariableCapture {
+   
+   
+    public static TestInterface testFunction (final int value) {
+        TestInterface testObject = new TestInterface() {
+            public void internalTestFunction() {
+                System.out.println(value);
+            }
+        };
+       
+        return testObject;
+    }
+   
+    public static void main(String []args) {
+        TestInterface testObject = testFunction(5);            ------(1)
+        testObject.internalTestFunction();                ------(2)
+    }
+
+}
+
+As can be seen that the execution of “testFunction()” completes at step (1) and hence all
+local variables of the function will be deleted from the stack but testObject still holds 
+a reference to the local variable “value” which it prints out in step (2).
+

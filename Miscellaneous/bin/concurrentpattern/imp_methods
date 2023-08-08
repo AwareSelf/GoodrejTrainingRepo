@@ -1,0 +1,48 @@
+1) boolean awaitTermination(long timeout, TimeUnit unit)	
+  This method blocks the task to enter ExecutorService until all the tasks have completed 
+  after the shutdown request, or the given timeout occurs, or the current thread is interrupted, 
+  whichever happens first.
+  
+2) <T> List invokeAll(Collection<? extends Callable<T>> tasks)	
+   This method executes the list of tasks given and returns the list of Futures which contain the 
+   results of all the tasks when completed.
+   
+3) <T> List invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)	
+   This method executes the list of tasks given and returns the list of Futures which contain the 
+   results of all the tasks when completed or the timeout expires, whichever occurs first.
+   
+4) <T> T invokeAny(Collection<? extends Callable<T>> tasks)	
+   This method executes the list of tasks given and returns the result of one task which gets 
+   completed without throwing any exception.
+   
+5) boolean isShutdown()	This method returns whether the given executor is shut down or not.
+
+6) boolean isTerminated()	This method returns true if all tasks have executed after shutdown.
+
+7) void shutdown()	This method allows completion of previously submitted tasks to the ExecutorService
+   and doesn't allow any other tasks to be accepted.
+   
+8) List shutdownNow()	This method stops all the actively executing tasks, stops the execution of 
+   queued up tasks, and returns the list of tasks which are queued up.
+   
+9) <T> Future<T> submit(Callable<T> task)	
+    This method submits a value-returning task for execution and returns the Future, 
+    which represents the pending result of the task.
+    
+10) Future<?> submit(Runnable task)	
+    This method submits a task for execution and returns a Future representing that task. 
+    It returns null upon successful completion.
+    
+11) <T> Future<T> submit(Runnable task, T result)	
+    This method submits a task for execution and returns a Future representing that task.
+    
+How to shut down ExecutorService
+Once we are done with our tasks given to ExecutorService, then we have to shut it down because 
+ExecutorService performs the task on different threads. If we don't shut down the ExecutorService, 
+the threads will keep running, and the JVM won?t shut down.
+
+The process of shutting down can be done by the following three methods-
+
+shutdown() method
+shutdownNow() method
+awaitTermination() method
